@@ -329,8 +329,9 @@ void noviceLevel()
         int temp = checkWinner(v); // Check for a winner
         if (temp != 0)
         {
-            cout << (temp == 1 ? first.name : second.name) << " wins!" << endl
-                 << endl;
+            string str = (temp == first.id ? first.name : second.name);
+            if(str != "Computer") cout << str << " wins!" << endl << endl;
+            else cout << "You lost!" << endl << endl;
             cout << "Thanks for Playing!" << endl
                  << endl;
             break;
