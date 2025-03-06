@@ -4,6 +4,7 @@
 
 #include <bits/stdc++.h>
 #include <cstdlib> // For system("clear")
+#include<unistd.h>
 using namespace std;
 
 // Class to store user information
@@ -31,15 +32,17 @@ void setUser(user &first, user &second)
             break; // Ensure usernames are unique
 
         // Display message if both players enter the same name
-        cout << "Why are you trying to play alone?" << endl << "Don't you have any friends?" << endl << endl;
+        cout << "Why are you trying to play alone?" << endl
+             << "Don't you have any friends?" << endl
+             << endl;
     }
 }
 
 // Function to display player names before the game starts
 void header(user first, user second)
 {
-    cout << "User 1: " << first.name << "(o)" << "\t";
-    cout << "User 2: " << second.name << "(x)" << endl;
+    cout << "User 1: " << first.name << (first.id == 1 ? ("(o)") : ("(x)")) << "\t";
+    cout << "User 2: " << second.name << (second.id == 1 ? ("(o)") : ("(x)")) << endl;
 }
 
 // Function to display the board's input format before the game starts
@@ -117,6 +120,8 @@ void takeInput(user currentMove, vector<vector<int>> &v)
             if (v[quotient][remainder] == 0)
             {
                 v[quotient][remainder] = currentMove.id; // Mark the move
+                    cout.flush();
+                    usleep(300000);
                 break;
             }
 
@@ -174,12 +179,10 @@ int checkWinner(vector<vector<int>> &board)
     return 0; // No winner
 }
 
-// Main function to run the Tic-Tac-Toe game
-int main()
+// 1. Play with Friend
+void playWithFriend()
 {
-    // Clearing the console screen at the beginning
     system("clear");
-
     user first, second;          // Creating player objects
     first.id = 1, second.id = 2; // Assigning unique IDs
 
@@ -198,8 +201,10 @@ int main()
         int temp = checkWinner(v); // Check for a winner
         if (temp != 0)
         {
-            cout << (temp == 1 ? first.name : second.name) << " wins!" << endl << endl;
-            cout << "Thanks for Playing!" << endl << endl;
+            cout << (temp == 1 ? first.name : second.name) << " wins!" << endl
+                 << endl;
+            cout << "Thanks for Playing!" << endl
+                 << endl;
             break;
         }
 
@@ -207,8 +212,10 @@ int main()
         {
             // Check for a draw
             cout << "Out of Moves!" << endl;
-            cout << "-----Draw-----" << endl << endl;
-            cout << "Thanks for Playing!" << endl << endl;
+            cout << "-----Draw-----" << endl
+                 << endl;
+            cout << "Thanks for Playing!" << endl
+                 << endl;
             break;
         }
 
@@ -218,4 +225,164 @@ int main()
         // Clear screen to refresh the board
         system("clear");
     }
+}
+
+void takeInputNovice(user currentMove, vector<vector<int>> &v)
+{
+    if (currentMove.id == 2)
+    {
+        cout << currentMove.name << "'s turn: ";
+        for(int i = 0; i < 5; i++){
+            cout << '.';
+            cout.flush();
+            usleep(500000);
+        }
+        while (true)
+        {
+            int temp;
+            temp = rand()%9;
+            int quotient = temp / 3;
+            int remainder = temp % 3;
+
+            // Check if the selected cell is empty
+            if (v[quotient][remainder] == 0)
+            {
+                v[quotient][remainder] = currentMove.id; // Mark the move
+                break;
+            }
+        }
+    }
+    else
+    {
+        while (true)
+        {
+            cout << currentMove.name << "'s turn: ";
+            int temp;
+            // Input validation with error handling
+            try
+            {
+                cin >> temp;
+
+                // Check if input is a valid integer
+                if (cin.fail())
+                {
+                    throw invalid_argument("Invalid input! Please enter an integer.");
+                }
+
+                // Validate the move (should be between 1 and 9)
+                if (temp < 1 || temp > 9)
+                {
+                    cout << "Invalid Move! Please enter a number between 1 and 9." << endl;
+                    continue;
+                }
+
+                temp--; // Convert to 0-based index
+                int quotient = temp / 3;
+                int remainder = temp % 3;
+
+                // Check if the selected cell is empty
+                if (v[quotient][remainder] == 0)
+                {
+                    v[quotient][remainder] = currentMove.id; // Mark the move
+                    cout.flush();
+                    usleep(300000);
+                    break;
+                }
+
+                cout << temp + 1 << " is already taken! Try again!" << endl;
+            }
+            catch (const invalid_argument &e)
+            {
+                cout << e.what() << endl;
+
+                // Clear error state and ignore invalid input
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            }
+        }
+    }
+    
+}
+
+// Difficulty Novice
+void noviceLevel()
+{
+    system("clear");
+    user first, second;          // Creating player objects
+    first.id = 1, second.id = 2; // Assigning unique IDs
+
+    vector<vector<int>> v(3, vector<int>(3)); // Initializing empty 3x3 board
+    cout << "Enter User Name: ";
+    cin >> first.name;
+    second.name = "Computer";
+    if (rand() % 2)
+        swap(first, second);
+
+    user currentMove = first; // First player starts the game
+
+    while (true)
+    {
+        modelArena();          // Displaying model board
+        header(first, second); // Displaying player names
+        mainArena(v);          // Displaying current board state
+
+        int temp = checkWinner(v); // Check for a winner
+        if (temp != 0)
+        {
+            cout << (temp == 1 ? first.name : second.name) << " wins!" << endl
+                 << endl;
+            cout << "Thanks for Playing!" << endl
+                 << endl;
+            break;
+        }
+
+        if (!moveAvailibility(v))
+        {
+            // Check for a draw
+            cout << "Out of Moves!" << endl;
+            cout << "-----Draw-----" << endl
+                 << endl;
+            cout << "Thanks for Playing!" << endl
+                 << endl;
+            break;
+        }
+
+        takeInputNovice(currentMove, v);                             // Taking player input and updating the board
+        currentMove = (currentMove.id == first.id) ? second : first; // Swapping turns
+
+        // Clear screen to refresh the board
+        system("clear");
+    }
+}
+
+// 2. Play with Computer
+void playWithComputer()
+{
+    system("Clear");
+    cout << "Choose Difficulty: " << endl;
+    cout << "1. Novice" << endl;
+    cout << "2. Expert" << endl;
+    cout << "3. Impossible" << endl;
+    int difficulty;
+    cout << "Your Choice: ";
+    cin >> difficulty;
+    if (difficulty == 1)
+        noviceLevel();
+}
+
+// Main function to run the Tic-Tac-Toe game
+int main()
+{
+    // Clearing the console screen at the beginning
+    system("clear");
+    cout << "Mode:" << endl;
+    cout << "1. Play with Friend" << endl;
+    cout << "2. Play with Computer" << endl;
+    cout << "Your Choice: ";
+    int mode;
+    cin >> mode;
+    if (mode == 1)
+        playWithFriend();
+    else
+        playWithComputer();
 }
