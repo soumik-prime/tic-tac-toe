@@ -1,6 +1,8 @@
 main
 main.exc
-.vscode
-.cph
+tic_tac_toe
+tic_tac_toe.exc
+.vscode/
+.cph/
 main.bin
 settings.json

@@ -407,18 +407,20 @@ void promptPlayerMove(vector<vector<int>> &board, Player player, int difficultyL
         }
     }
     else{
-        cout << player.name << "'s turn: ";
+        cout << player.name << "'s turn:";
         if(difficultyLevel == 1) move = noviceLevelMove(board);
         else if(difficultyLevel == 2) move = expertLevelMove(board, player);
         // Flush the output buffer to ensure prompt display immediately
         cout.flush();
         // Sleep briefly make game experience smoother
         usleep(500000);
-        cout << move << "\n";
-        // Flush the output buffer to ensure prompt display immediately
-        cout.flush();
-        // Sleep briefly make game experience smoother
-        usleep(300000);
+        for(int i = 0; i < 3; i++){
+            cout << ".";
+            // Flush the output buffer to ensure prompt display immediately
+            cout.flush();
+            // Sleep briefly make game experience smoother
+            usleep(300000);
+        }
     }
 
     int rowIndex = (move - 1) / 3;  // Adjust move to 0-indexed
