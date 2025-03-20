@@ -1,6 +1,6 @@
 # Tic-Tac-Toe Game
 
-This is a simple Tic-Tac-Toe game implemented in C++. It supports both **two-player mode** and **player vs. system mode** with selectable difficulty levels and move orders. The game is played on a 3x3 grid, and players alternate turns to place their mark ('X' or 'O') on the grid, aiming to be the first to get three marks in a row (horizontally, vertically, or diagonally).
+This is a simple Tic-Tac-Toe game implemented in C++. It supports both **two-player mode** and **player vs. system mode** with selectable difficulty levels and move orders. The game is played on a 3x3 grid, and players alternate turns to place their mark ('x' or 'o') on the grid, aiming to be the first to get three marks in a row (horizontally, vertically, or diagonally).
 
 ## Features
 
@@ -9,7 +9,7 @@ This is a simple Tic-Tac-Toe game implemented in C++. It supports both **two-pla
 - **Difficulty Levels**:
   - **Novice**: The system makes random moves.
   - **Expert**: The system uses a more intelligent algorithm to block and win.
-  - **Unbeatable**: The system uses a perfect strategy (Minimax algorithm) to never lose.
+  - **Unbeatable**: The system uses a perfect strategy (Minimax algorithm) to never lose.(Not Available Right now)
 - **Move Order Selection**: Choose to go first, second, or let the game decide randomly.
 - **Game State Display**: The current state of the game board is displayed after each move.
 - **Input Validation**: Ensures only valid moves are made.
@@ -46,7 +46,7 @@ This is a simple Tic-Tac-Toe game implemented in C++. It supports both **two-pla
    - Select the difficulty level:
      - **1**: Novice
      - **2**: Expert
-     - **3**: Unbeatable
+     - **3**: Unbeatable(Coming Soon)
    - Choose your move order:
      - **1**: First move
      - **2**: Second move

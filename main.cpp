@@ -209,7 +209,7 @@ void startGameWithComputer(){
     cout << "Choose Difficulty Level: " << "\n";
     cout << "1. Novice" << "\n";
     cout << "2. Expert" << "\n";
-    cout << "3. Unbeatable" << "\n";
+    cout << "3. Unbeatable (Coming Soon)" << "\n";
     int difficultyLevel;
     while (true) {  // Loop for ensuring vaild difficulty level selection
         // Prompt the user to make a selection
